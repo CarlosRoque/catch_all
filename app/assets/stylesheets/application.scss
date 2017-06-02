@@ -13,3 +13,19 @@
  *= require_tree .
  *= require_self
  */
+
+table {
+  margin: 0 auto;
+  border-collapse:collapse;
+}
+
+main {text-align: center;}
+td,th {  font-size: 12pt; padding: 10px 15px;}
+th {background-color: #333; color: white;}
+tr:nth-child(odd) { background-color: whitesmoke;}
+tr:nth-child(even) { background-color: white;}
+
+.field {
+  input[type=text],textarea{ width: 800px; padding: 10px; box-sizing: border-box;}
+  textarea {height: 200px;}
+ }

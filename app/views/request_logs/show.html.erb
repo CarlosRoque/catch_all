@@ -1,14 +1,18 @@
 <p id="notice"><%= notice %></p>
-
 <p>
-  <strong>Raw:</strong>
-  <%= @request_log.raw %>
+  <strong>Requested Path:</strong>
+  <%= @request_log.requested_path %>
+</p>
+<p>
+  <strong>Headers:</strong>
+  <%= @request_log.headers %>
 </p>
 
 <p>
-  <strong>Source:</strong>
-  <%= @request_log.source %>
+  <strong>Body:</strong>
+  <%= @request_log.body %>
 </p>
+
 
 <%= link_to 'Edit', edit_request_log_path(@request_log) %> |
 <%= link_to 'Back', request_logs_path %>

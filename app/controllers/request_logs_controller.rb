@@ -4,15 +4,21 @@ class RequestLogsController < ApplicationController
 
   def create_log
     @request_log = RequestLog.new
-    @request_log.source = request.fullpath
-    @request_log.raw = request.body.read
+    @request_log.requested_path = request.fullpath
+    @request_log.body = request.body.read
     @request_log.headers = request.env.select {|k,v|
       k.match("^HTTP.*|^CONTENT.*|^REMOTE.*|^REQUEST.*|^AUTHORIZATION.*|^SCRIPT.*|^SERVER.*")
     }
+
+    request.format = :xml if request.env['CONTENT_TYPE'].include?('xml')
+    request.format = :xml if request.env['CONTENT_TYPE'].include?('json')
+
+
     respond_to do |format|
       if @request_log.save
         format.html { redirect_to @request_log, notice: 'Request log was successfully created.' }
         format.json { render :show, status: :created, location: @request_log }
+        format.xml {render :xml=> @request_log}
       else
         format.html { render :new }
         format.json { render json: @request_log.errors, status: :unprocessable_entity }
@@ -88,6 +94,6 @@ class RequestLogsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def request_log_params
-      params.require(:request_log).permit(:raw, :source)
+      params.require(:request_log).permit(:requested_path, :body,:headers)
     end
 end
